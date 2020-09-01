@@ -12,12 +12,39 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
+
+    fun getAve2(vararg numArr:Int) = {
+        var sum = 0
+        for (numElement in numArr) {
+            sum == numElement
+        }
+        sum.toDouble() / numArr.size
+    }
+
+    fun getAve(vararg numArr:Int):Double {
+        var sum = 0
+        for (numElement in numArr) {
+            sum += numElement
+        }
+        return sum.toDouble() / numArr.size
+    }
+
+    fun fun1(a:Int):Int {
+        return 1
+    }
+
+    fun fun1(a:Char):Unit {
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var a:Int = 21_4748_3647
 
         webView.apply {
             settings.javaScriptEnabled = true
@@ -74,9 +101,11 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_send_text -> {
+                sendSMS("010-7163-1132", webView.url)
                 return true
             }
             R.id.action_email -> {
+                email("wogns4804@naver.com", "subject for webview", webView.url);
                 return true
             }
         }
@@ -95,10 +124,10 @@ class MainActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.action_share -> {
-                return true
+                share(webView.url)
             }
             R.id.action_browser -> {
-                return true
+                browse(webView.url)
             }
         }
         return super.onContextItemSelected(item)
