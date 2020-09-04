@@ -8,7 +8,9 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,6 +29,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.yesButton
+import java.security.Permission
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -80,11 +83,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
-        permissionCheck(cancel = {
-            showPermissionInfoDialog()
-        }, ok = {
-            addLocationListener()
-        })
+        permissionCheck({showPermissionInfoDialog()}, {addLocationListener()})
     }
 
     override fun onPause() {
@@ -113,6 +112,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             locationCallback,
             null)
     }
+//
+//    private val listener2 = (object:View.OnClickListener {
+//        override fun onClick(v: View?) {
+//            TODO("Not yet implemented")
+//        }
+//    })
+//
+//    private val listener3 = (object: LocationCallback() {
+//        override fun onLocationResult(locationResult: LocationResult?) {
+//            super.onLocationResult(locationResult)
+//
+//            val location = locationResult?.lastLocation
+//
+//            location?.run {
+//                val latLng = LatLng(latitude, longitude)
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
+//
+//                Log.d("MapsActivity", "위도 : $latitude, 경도 : $longitude")
+//
+//                polylineOptions.add(latLng)
+//
+//                mMap.addPolyline(polylineOptions)
+//            }
+//        }
+//    })
+//
+//    private val listener = View.OnClickListener {
+//        println((it as TextView).text)
+//    }
 
     private fun removeLocationListener() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
